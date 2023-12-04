@@ -1,4 +1,16 @@
 import sys
+from math import prod
+
+#Parse Puzzle input
+def parse(puzzle_input: str) -> any:
+    print([1, 2, 3, 4, 5][::5-1])
+    return puzzle_input.split('\n')
+
+def part1(data: list[str]) -> int:
+    return sum(int("".join(c for c in l if c.isnumeric())) for l in data)
+
+#def part2(data: list[str]) -> int:
+#    return sum(int([c for c in l if c.isnumeric()][0]+[c for c in l if c.isnumeric()][-1]) for l in data)
 
 names = [
     'one',
@@ -12,30 +24,9 @@ names = [
     'nine'
 ]
 
-#Parse Puzzle input
-def parse(puzzle_input: str) -> any:
-    return puzzle_input.split('\n')
-
-#Solve Part 1
-def part1(data: list[str]) -> int:
-    total = 0
-    for line in data:
-        a = b = None
-        for char in line:
-            if char.isnumeric():
-                if a is None:
-                    a = char
-                b = char
-        value = int(f'{a}{b}')
-        print(a, b, value)
-        total = total + value
-    return total
-
 def can_it_make_a_number(string: str, index: int) -> int:
-    print(string, index)
     for name in names:
         if name == string[index:index+len(name)]:
-            print(names.index(name)+1)
             return names.index(name)+1
     return 0
     
@@ -58,26 +49,25 @@ def part2(data) -> int:
                     a = line[idx]
                 b = line[idx]
         value = int(f'{a}{b}')
-        print(a, b, value)
         total = total + value
     return total
 
 #Solve Both Parts
 def solve(puzzle_input: str) -> tuple[int, int]:
     data = parse(puzzle_input)
-    solution1 = 1#part1(data)
+    solution1 = part1(data)
     solution2 = part2(data)
     return solution1, solution2
 
 #Boilerplate
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == 'test':
-        f = open('test.txt', 'r')
+        f = open('./test.txt', 'r')
         puzzle_input = f.read().strip()
         solutions = solve(puzzle_input)
         print("\n".join(str(solution) for solution in solutions))
     else:
-        f = open('input.txt', 'r')
+        f = open('./input.txt', 'r')
         puzzle_input = f.read().strip()
         solutions = solve(puzzle_input)
         print("\n".join(str(solution) for solution in solutions))
