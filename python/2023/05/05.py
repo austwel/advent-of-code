@@ -20,22 +20,22 @@ def parse(puzzle_input: str) -> any:
         len(data)+1
     ]
 
-    map: dict[int, tuple[int, int, int]] = {}
+    m: dict[int, tuple[int, int, int]] = {}
     for map_idx in range(len(idxs)-1):
         for i in range(idxs[map_idx]+1, idxs[map_idx+1]-1):
-            if map_idx in map.keys():
-                map[map_idx].append(tuple(int(i) for i in data[i].split(' ')))
+            if map_idx in m.keys():
+                m[map_idx].append(tuple(int(i) for i in data[i].split(' ')))
             else:
-                map[map_idx] = [tuple(int(i) for i in data[i].split(' '))]
+                m[map_idx] = [tuple(int(i) for i in data[i].split(' '))]
                 
-    return seeds, seed_ranges, map
+    return seeds, seed_ranges, m
 
 #Solve Part 1
-def part1(seeds: list[int], map: dict[int, tuple[int, int, int]]) -> int:
+def part1(seeds: list[int], m: dict[int, tuple[int, int, int]]) -> int:
     locs: list[int] = []
     for seed in seeds:
         curr, next = seed, None
-        for ranges in map.values():
+        for ranges in m.values():
             for dest, source, l in ranges:
                 if source <= curr < source+l:
                     next = dest+curr-source
@@ -69,20 +69,14 @@ def part2(seed_ranges: list[tuple[int, int]], map: dict[int, tuple[int, int, int
 
 #Solve Both Parts
 def solve(puzzle_input: str) -> tuple[int, int]:
-    seeds, seed_ranges, map = parse(puzzle_input)
-    solution1 = part1(seeds, map)
-    solution2 = part2(seed_ranges, map)
+    seeds, seed_ranges, m = parse(puzzle_input)
+    solution1 = part1(seeds, m)
+    solution2 = part2(seed_ranges, m)
     return solution1, solution2
 
 #Boilerplate
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == 'test':
-        f = open('test.txt', 'r')
-        puzzle_input = f.read().strip()
-        solutions = solve(puzzle_input)
-        print("\n".join(str(solution) for solution in solutions))
-    else:
-        f = open('input.txt', 'r')
-        puzzle_input = f.read().strip()
-        solutions = solve(puzzle_input)
-        print("\n".join(str(solution) for solution in solutions))
+    f = open('test.txt' if len(sys.argv) > 1 and sys.argv[1] == 'test' else 'input.txt', 'r')
+    puzzle_input = f.read().strip()
+    solutions = solve(puzzle_input)
+    print("\n".join(str(solution) for solution in solutions))

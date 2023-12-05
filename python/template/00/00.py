@@ -21,13 +21,7 @@ def solve(puzzle_input: str) -> tuple[int, int]:
 
 #Boilerplate
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == 'test':
-        f = open('test.txt', 'r')
-        puzzle_input = f.read().strip()
-        solutions = solve(puzzle_input)
-        print("\n".join(str(solution) for solution in solutions))
-    else:
-        f = open('input.txt', 'r')
-        puzzle_input = f.read().strip()
-        solutions = solve(puzzle_input)
-        print("\n".join(str(solution) for solution in solutions))
+    f = open('test.txt' if len(sys.argv) > 1 and sys.argv[1] == 'test' else 'input.txt', 'r')
+    puzzle_input = f.read().strip()
+    solutions = solve(puzzle_input)
+    print("\n".join(str(solution) for solution in solutions))
