@@ -31,7 +31,7 @@ def parse(puzzle_input: str) -> any:
     return seeds, seed_ranges, m
 
 #Solve Part 1
-def part1(seeds: list[int], m: dict[int, tuple[int, int, int]]) -> int:
+def part1(seeds: list[int], m: dict[int, list[tuple[int, int, int]]]) -> int:
     locs: list[int] = []
     for seed in seeds:
         curr, next = seed, None
@@ -40,32 +40,23 @@ def part1(seeds: list[int], m: dict[int, tuple[int, int, int]]) -> int:
                 if source <= curr < source+l:
                     next = dest+curr-source
                     break
-            if next is None: next = curr
-            curr, next = next, None
-        
+            curr = curr if next is None else next
         locs.append(curr)
     return min(locs)
             
 #Solve Part 2
-def part2(seed_ranges: list[tuple[int, int]], map: dict[int, tuple[int, int, int]]) -> int:
-    lowest_possible_loc = None
-    loc = 0
-    while not lowest_possible_loc:
-        loc+=1
-        curr, next = loc, None
+def part2(seed_ranges: list[tuple[int, int]], map: dict[int, list[tuple[int, int, int]]]) -> int:
+    low, loc = None, 0
+    while not low:
+        loc, curr, next = loc+1, loc+1, None
         for ranges in reversed(list(map.values())):
             for dest, source, l in ranges:
                 if dest <= curr < dest+l:
                     next = source+curr-dest
                     break
-            if next is None: next = curr
-            curr, next = next, None
-        
-        for init, l in seed_ranges:
-            if init <= curr < init+l:
-                lowest_possible_loc = loc
-        
-    return lowest_possible_loc
+            curr = curr if next is None else next
+        if any([1 for start, range in seed_ranges if start<=curr<start+range]): low = loc
+    return low
 
 #Solve Both Parts
 def solve(puzzle_input: str) -> tuple[int, int]:
