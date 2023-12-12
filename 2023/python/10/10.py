@@ -53,7 +53,7 @@ def calculate_inside(map, locs) -> int:
         count=False
         for tile in range(len(map[0])):
             if locs[line][tile]:
-                if map[line][tile] in '|LJ':
+                if map[line][tile] in '|F7':
                     count = not count
             elif count:
                 total += 1
