@@ -8,17 +8,7 @@ def inp(filepath):
         return [[int(i) for i in l.split(' ')] for l in lines]
 
 def part1(filepath):
-    count = 0
-    data = inp(filepath)
-    for report in data:
-        diffs = [report[i]-report[i+1] for i in range(len(report)-1)]
-        if not any([True for diff in diffs if diff < -3 or diff >= 0]):
-            count +=1
-            continue
-        if not any([True for diff in diffs if diff > 3 or diff <= 0]):
-            count +=1
-            continue
-    return count
+    return len([True for report in inp(filepath) if not any([True for diff in [report[i]-report[i+1] for i in range(len(report)-1)] if diff < -3 or diff >= 0]) or not any ([True for diff in [report[i]-report[i+1] for i in range(len(report)-1)] if diff > 3 or diff <= 0])])
 
 def part2(filepath):
     count = 0
