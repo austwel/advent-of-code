@@ -4,5 +4,5 @@ all:
 %:
 	python3 $@.py $(part)
 
-new:
-	cp 00.py $(d).py
+new %:
+	cp 00.py $@.py
