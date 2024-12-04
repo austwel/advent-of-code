@@ -1,11 +1,8 @@
 all:
-	python $(d)/problem.py $(d)/input.txt $(p)
+	$(foreach file, $(filter-out 00.py, $(wildcard *.py)), python3 $(file);)
 
-test:
-	python $(d)/problem.py $(d)/example.txt $(p)
+%:
+	python3 $@.py $(d)
 
 new:
-	mkdir $(d)
-	cp problem.py $(d)/problem.py
-	touch $(d)/input.txt
-	touch $(d)/example.txt
+	cp 00.py $(d).py
