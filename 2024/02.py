@@ -6,7 +6,7 @@ from aocd import data
 data = [[int(i) for i in l.split(' ')] for l in data.strip().split('\n')]
 
 def part1():
-    return len([True for report in data if not any([True for diff in [report[i]-report[i+1] for i in range(len(report)-1)] if diff < -3 or diff >= 0]) or not any ([True for diff in [report[i]-report[i+1] for i in range(len(report)-1)] if diff > 3 or diff <= 0])])
+    return len([1 for report in data if not any([1 for diff in [report[i]-report[i+1] for i in range(len(report)-1)] if diff < -3 or diff >= 0]) or not any ([1 for diff in [report[i]-report[i+1] for i in range(len(report)-1)] if diff > 3 or diff <= 0])])
 
 def part2():
     count = 0
